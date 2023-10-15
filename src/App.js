@@ -1,25 +1,53 @@
-import logo from './logo.svg';
+import {useState} from 'react';
 import './App.css';
+import Game from './game.js';
 
-function App() {
+function App()
+{ 
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [currentMove, setCurrentMove] = useState(0);
+  const nextVal = currentMove % 2 === 0;
+  const currentSquare = history[currentMove];
+
+  function handlePlay(nextSquares) {
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+    setHistory(nextHistory);
+    setCurrentMove(nextHistory.length - 1);
+  }
+
+  function jumpTo(nextMove) {
+    setCurrentMove(nextMove);
+  }
+
+  const moves = history.map((squares, move) => {
+    let description;
+    if (move > 0) {
+      description = 'Go to move #' + move;
+    } else {
+      description = 'Go to game start';
+    }
+    return (
+      <li key={move}>
+        <button  className="moves" onClick={() => jumpTo(move)}>{description}</button>
+      </li>
+    );
+  });
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+       <h1>TIC-TAC-TOE</h1>
+    <div className="container">
+    <div className="game">
+      <div className="game-board">
+        <Game nextVal={nextVal} squares={currentSquare} onPlay={handlePlay}/>
+      </div>
+      <div className="game-info">
+        <ol>{moves}</ol>
+      </div>
+    </div>
+    </div>
     </div>
   );
 }
-
 export default App;
