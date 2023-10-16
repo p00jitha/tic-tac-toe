@@ -1,5 +1,8 @@
 # tic-tac-toe
 Welcome to the Tic-Tac-Toe React Game! This is a simple implementation of the classic game using React.
+
+You can play the game live here:https://p00jitha.github.io/tic-tac-toe/
+
 - Classic Tic-Tac-Toe gameplay.
 - Real-time updates to show the player's turn.
 - Declares a winner when someone wins or indicates a draw.
